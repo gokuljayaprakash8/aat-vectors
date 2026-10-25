@@ -1,0 +1,3505 @@
+{
+ "draft": "draft-niyikiza-oauth-attenuating-agent-tokens-01",
+ "now": 1800000000,
+ "vectors": [
+  {
+   "name": "valid-narrowing",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 1,
+         "max": 5
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [],
+   "basis": "4.2-4.5"
+  },
+  {
+   "name": "I1-wrong-issuer",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "https://evil.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 1,
+         "max": 5
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I1"
+   ],
+   "basis": "4.2"
+  },
+  {
+   "name": "I2-depth-skips",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 2,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 1,
+         "max": 5
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I2"
+   ],
+   "basis": "4.3"
+  },
+  {
+   "name": "I2-depth-same-as-parent",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 1,
+         "max": 5
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I2"
+   ],
+   "basis": "4.3"
+  },
+  {
+   "name": "I2-child-max-depth-wider",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 5,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 1,
+         "max": 5
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I2"
+   ],
+   "basis": "4.3"
+  },
+  {
+   "name": "I2-control-valid-depth",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 1,
+         "max": 5
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [],
+   "basis": "4.3 (control)"
+  },
+  {
+   "name": "I2-depth-over-global-limit",
+   "parent": {
+    "jti": "t8",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 8,
+    "del_max_depth": 9,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "child": {
+    "jti": "t9",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 9,
+    "del_max_depth": 9,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I2"
+   ],
+   "basis": "4.3 MAX_DELEGATION_DEPTH"
+  },
+  {
+   "name": "I3-exp-after-parent",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800002000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 1,
+         "max": 5
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I3"
+   ],
+   "basis": "4.4"
+  },
+  {
+   "name": "I3-already-expired",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1799999999,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 1,
+         "max": 5
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I3"
+   ],
+   "basis": "4.4"
+  },
+  {
+   "name": "I3-iat-before-parent",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999800,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 1,
+         "max": 5
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I3"
+   ],
+   "basis": "4.4"
+  },
+  {
+   "name": "I3-iat-in-future-beyond-skew",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1800000031,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 1,
+         "max": 5
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I3"
+   ],
+   "basis": "4.4"
+  },
+  {
+   "name": "I3-control-valid-lifetime",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 1,
+         "max": 5
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [],
+   "basis": "4.4 (control)"
+  },
+  {
+   "name": "I3-lifetime-over-max",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800009000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800003501,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 1,
+         "max": 5
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I3"
+   ],
+   "basis": "4.4 MAX_TOKEN_LIFETIME"
+  },
+  {
+   "name": "I4-adds-tool",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 1,
+         "max": 5
+        }
+       },
+       "delete_all": {}
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I4"
+   ],
+   "basis": "4.5"
+  },
+  {
+   "name": "I4-one_of-not-subset",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "c@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 1,
+         "max": 5
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I4"
+   ],
+   "basis": "4.5 one_of"
+  },
+  {
+   "name": "I4-range-widened-max",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 11
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I4"
+   ],
+   "basis": "4.5 range"
+  },
+  {
+   "name": "I4-range-widened-min",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": -1,
+         "max": 5
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I4"
+   ],
+   "basis": "4.5 range"
+  },
+  {
+   "name": "I4-drops-constrained-argument",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com"
+         ]
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I4"
+   ],
+   "basis": "4.5 (same argument keys when parent map non-empty)"
+  },
+  {
+   "name": "I4-adds-argument-under-nonempty-parent",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 1,
+         "max": 5
+        },
+        "extra": {
+         "constraint_type": "wildcard"
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I4"
+   ],
+   "basis": "4.5 (same argument keys when parent map non-empty)"
+  },
+  {
+   "name": "I4-adds-argument-under-empty-parent",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 1,
+         "max": 5
+        }
+       },
+       "read_file": {
+        "path": {
+         "constraint_type": "exact",
+         "value": "/tmp/a"
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [],
+   "basis": "4.5 (parent map empty: child may add keys)"
+  },
+  {
+   "name": "I4-exact-under-one_of-member",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "exact",
+         "value": "a@x.com"
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 1,
+         "max": 5
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [],
+   "basis": "4.5 exact subsumes one_of (member)"
+  },
+  {
+   "name": "I4-exact-under-one_of-nonmember",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "exact",
+         "value": "z@x.com"
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 1,
+         "max": 5
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I4"
+   ],
+   "basis": "4.5 exact subsumes one_of (member)"
+  },
+  {
+   "name": "I4-exact-under-range-inside",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "exact",
+         "value": 3
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [],
+   "basis": "4.5 exact subsumes range"
+  },
+  {
+   "name": "I4-exact-under-range-outside",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "exact",
+         "value": 99
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I4"
+   ],
+   "basis": "4.5 exact subsumes range"
+  },
+  {
+   "name": "I4-cross-type-range-to-one_of-rejected",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "one_of",
+         "values": [
+          1,
+          2
+         ]
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I4"
+   ],
+   "basis": "4.5 (cross-type pair not explicitly permitted must be rejected)"
+  },
+  {
+   "name": "I4-unregistered-type-rejected",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "frobnicate"
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I4"
+   ],
+   "basis": "3.5 / 4.5"
+  },
+  {
+   "name": "I4-exact-true-is-not-a-number-in-range",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com",
+          "b@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       },
+       "read_file": {}
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "send_email": {
+        "to": {
+         "constraint_type": "one_of",
+         "values": [
+          "a@x.com"
+         ]
+        },
+        "n": {
+         "constraint_type": "exact",
+         "value": true
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I4"
+   ],
+   "basis": "JSON typing (open question Q4)"
+  },
+  {
+   "name": "I4-exact-1-vs-true-differ",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "exact",
+         "value": 1
+        }
+       }
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "exact",
+         "value": true
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I4"
+   ],
+   "basis": "JSON typing (open question Q4)"
+  },
+  {
+   "name": "matrix-not_one_of-superset-ok",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "not_one_of",
+         "excluded": [
+          1
+         ]
+        }
+       }
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "not_one_of",
+         "excluded": [
+          1,
+          2
+         ]
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [],
+   "basis": "4.5 not_one_of"
+  },
+  {
+   "name": "matrix-not_one_of-subset-bad",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "not_one_of",
+         "excluded": [
+          1,
+          2
+         ]
+        }
+       }
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "not_one_of",
+         "excluded": [
+          1
+         ]
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I4"
+   ],
+   "basis": "4.5 not_one_of"
+  },
+  {
+   "name": "matrix-contains-superset-ok",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "contains",
+         "required": [
+          "x"
+         ]
+        }
+       }
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "contains",
+         "required": [
+          "x",
+          "y"
+         ]
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [],
+   "basis": "4.5 contains"
+  },
+  {
+   "name": "matrix-contains-subset-bad",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "contains",
+         "required": [
+          "x",
+          "y"
+         ]
+        }
+       }
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "contains",
+         "required": [
+          "x"
+         ]
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I4"
+   ],
+   "basis": "4.5 contains"
+  },
+  {
+   "name": "matrix-subset-narrower-ok",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "subset",
+         "allowed": [
+          "x",
+          "y"
+         ]
+        }
+       }
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "subset",
+         "allowed": [
+          "x"
+         ]
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [],
+   "basis": "4.5 subset"
+  },
+  {
+   "name": "matrix-subset-wider-bad",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "subset",
+         "allowed": [
+          "x"
+         ]
+        }
+       }
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "subset",
+         "allowed": [
+          "x",
+          "y"
+         ]
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I4"
+   ],
+   "basis": "4.5 subset"
+  },
+  {
+   "name": "matrix-wildcard-under-wildcard-ok",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "wildcard"
+        }
+       }
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "wildcard"
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [],
+   "basis": "4.5 wildcard"
+  },
+  {
+   "name": "matrix-wildcard-under-exact-bad",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "exact",
+         "value": 1
+        }
+       }
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "wildcard"
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I4"
+   ],
+   "basis": "4.5 wildcard"
+  },
+  {
+   "name": "matrix-exact-under-wildcard-ok",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "wildcard"
+        }
+       }
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "exact",
+         "value": 1
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [],
+   "basis": "4.5 exact subsumes wildcard"
+  },
+  {
+   "name": "matrix-range-exclusivity-tighten-ok",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       }
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10,
+         "max_inclusive": false
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [],
+   "basis": "4.5 range"
+  },
+  {
+   "name": "matrix-range-exclusivity-loosen-bad",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10,
+         "max_inclusive": false
+        }
+       }
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "range",
+         "min": 0,
+         "max": 10
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I4"
+   ],
+   "basis": "4.5 range"
+  },
+  {
+   "name": "matrix-all-add-clause-ok",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "all",
+         "constraints": [
+          {
+           "constraint_type": "wildcard"
+          }
+         ]
+        }
+       }
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "all",
+         "constraints": [
+          {
+           "constraint_type": "wildcard"
+          },
+          {
+           "constraint_type": "exact",
+           "value": 1
+          }
+         ]
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [],
+   "basis": "4.5 all"
+  },
+  {
+   "name": "matrix-all-drop-clause-bad",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "all",
+         "constraints": [
+          {
+           "constraint_type": "wildcard"
+          },
+          {
+           "constraint_type": "exact",
+           "value": 1
+          }
+         ]
+        }
+       }
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "all",
+         "constraints": [
+          {
+           "constraint_type": "wildcard"
+          }
+         ]
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I4"
+   ],
+   "basis": "4.5 all"
+  },
+  {
+   "name": "matrix-any-remove-clause-ok",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "any",
+         "constraints": [
+          {
+           "constraint_type": "exact",
+           "value": 1
+          },
+          {
+           "constraint_type": "exact",
+           "value": 2
+          }
+         ]
+        }
+       }
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "any",
+         "constraints": [
+          {
+           "constraint_type": "exact",
+           "value": 1
+          }
+         ]
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [],
+   "basis": "4.5 any"
+  },
+  {
+   "name": "matrix-any-add-clause-bad",
+   "parent": {
+    "jti": "t0",
+    "iss": "https://issuer.example",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 0,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "any",
+         "constraints": [
+          {
+           "constraint_type": "exact",
+           "value": 1
+          }
+         ]
+        }
+       }
+      }
+     }
+    ]
+   },
+   "child": {
+    "jti": "t1",
+    "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "iat": 1799999900,
+    "exp": 1800001000,
+    "cnf": {
+     "jwk": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+     }
+    },
+    "del_depth": 1,
+    "del_max_depth": 4,
+    "authorization_details": [
+     {
+      "type": "attenuating_agent_token",
+      "tools": {
+       "t": {
+        "a": {
+         "constraint_type": "any",
+         "constraints": [
+          {
+           "constraint_type": "exact",
+           "value": 1
+          },
+          {
+           "constraint_type": "exact",
+           "value": 2
+          }
+         ]
+        }
+       }
+      }
+     }
+    ],
+    "par_hash": "x"
+   },
+   "now": 1800000000,
+   "limits": {
+    "MAX_DELEGATION_DEPTH": 8,
+    "MAX_IAT_SKEW": 30,
+    "MAX_TOKEN_LIFETIME": 3600
+   },
+   "expect": [
+    "I4"
+   ],
+   "basis": "4.5 any"
+  }
+ ]
+}
